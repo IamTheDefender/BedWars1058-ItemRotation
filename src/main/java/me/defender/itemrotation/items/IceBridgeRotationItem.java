@@ -96,7 +96,7 @@ public class IceBridgeRotationItem extends RotationItem {
                     block.setType(Material.AIR);
                     blocks.remove(block);
                 });
-                for(Block block1 : API.getNearbyBlocks(block.getLocation(), 1)){
+                for(Block block1 : API.getNearbyBlocks(block.getLocation(), 2)){
                     if(blocks.contains(block1)){
                         HCore.syncScheduler().after(1).run(() -> {
                             block.setType(Material.AIR);
