@@ -1,0 +1,8 @@
+name: ItemRotation
+version: '${project.version}'
+main: me.defender.itemrotation.ItemRotation
+prefix: BW1058-ItemRotation
+depend: [ BedWars1058 ]
+authors: [ IamTheDefender ]
+description: Adds item rotation category to your minecraft server with new items to buy
+api-version: 1.13
