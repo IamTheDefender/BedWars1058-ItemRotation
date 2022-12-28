@@ -4,4 +4,4 @@ Item Rotation addon for BedWars1058 inspired by Hypixel
 # Wiki
 [Click me!](https://github.com/IamTheDefender/BedWars1058-ItemRotation/wiki)
 # Spigot
-[Click me!]()
+[Click me!](https://www.spigotmc.org/resources/item-rotation-bw1058.107016/)
