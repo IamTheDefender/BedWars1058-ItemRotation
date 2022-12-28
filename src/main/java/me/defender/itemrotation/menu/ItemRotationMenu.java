@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ItemRotationMenu extends InventoryGui {
     public ItemRotationMenu(Player player) {
-        super("123", Language.getMsg(player, "item-rotation.item-name"), 6, InventoryType.CHEST);
+        super("ItemRotationMenu." + player.getDisplayName(), Language.getMsg(player, "item-rotation.menu-title"), 6, InventoryType.CHEST);
     }
 
     @Override
