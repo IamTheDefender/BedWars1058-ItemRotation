@@ -1,6 +1,7 @@
 package me.defender.itemrotation;
 
 import com.andrei1058.bedwars.api.BedWars;
+import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.api.language.Language;
 import me.defender.itemrotation.api.RotationItem;
 import org.bukkit.Bukkit;
@@ -151,10 +152,4 @@ public class API {
         }
         return blocks;
     }
-
-
-
-
-
-
 }

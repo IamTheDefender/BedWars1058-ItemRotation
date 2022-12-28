@@ -4,6 +4,7 @@ package me.defender.itemrotation.items;
 import com.hakan.core.HCore;
 import me.defender.itemrotation.api.RotationItem;
 import me.defender.itemrotation.API;
+import me.defender.itemrotation.api.utils.ConfigUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -87,21 +88,17 @@ public class IceBridgeRotationItem extends RotationItem {
            }
         });
 
-         HCore.syncScheduler().every(1, TimeUnit.SECONDS).run((runnable) -> {
+         HCore.syncScheduler().every(1L).run((runnable) -> {
             // Check if the player is standing on an ice block
             Block block = world.getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ());
             if (block.getType() == Material.ICE && blocks.contains(block)) {
                 // Remove the ice block
-                HCore.syncScheduler().after(1).run(() -> {
                     block.setType(Material.AIR);
                     blocks.remove(block);
-                });
-                for(Block block1 : API.getNearbyBlocks(block.getLocation(), 2)){
+                for(Block block1 : API.getNearbyBlocks(block.getLocation(), new ConfigUtils().getInt("Items." + defaultName() + ".block-break.radius"))){
                     if(blocks.contains(block1)){
-                        HCore.syncScheduler().after(1).run(() -> {
                             block.setType(Material.AIR);
                             blocks.remove(block);
-                        });
                     }
                 }
             }

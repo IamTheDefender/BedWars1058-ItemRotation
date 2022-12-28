@@ -43,7 +43,13 @@ public class SugarkenRotationItem extends RotationItem {
     public boolean execute(Player player, Block block) {
         FlyingStar sword = new FlyingStar(player);
         // Schedule a task to move the sword every tick
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(API.getMain(), sword::move, 0L, 1L);
+        HCore.syncScheduler().every(1).run((runnable -> {
+            if(sword.isAlive){
+                sword.move();
+            }else{
+                runnable.cancel();
+            }
+        }));
         return true;
     }
 
