@@ -22,6 +22,7 @@ public class ItemRotation extends JavaPlugin{
         getLogger().info("Loading ItemRotation plugin...");
         try {
             // Register event listeners and initialize variables
+            HCore.initialize(this);
             HCore.registerListeners(new onShopOpen());
             HCore.registerListeners(new onRightClick());
             API.items = new ArrayList<>();
