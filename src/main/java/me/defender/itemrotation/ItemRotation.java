@@ -6,7 +6,9 @@ import me.defender.itemrotation.command.MainCommand;
 import me.defender.itemrotation.listeners.onRightClick;
 import me.defender.itemrotation.listeners.onShopOpen;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;

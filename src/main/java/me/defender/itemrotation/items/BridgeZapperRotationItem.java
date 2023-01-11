@@ -49,7 +49,10 @@ public class BridgeZapperRotationItem extends RotationItem {
             // Player or block is null, return false
             return false;
         }
-
+       if(!API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).isBlockPlaced(block)){
+           player.sendMessage(Language.getMsg(player, "item-rotation.Bridge-Zapper.deny"));
+           return false;
+       }
         if (!isWool(block)) {
             player.sendMessage(Language.getMsg(player, "item-rotation.Bridge-Zapper.deny"));
             return false;

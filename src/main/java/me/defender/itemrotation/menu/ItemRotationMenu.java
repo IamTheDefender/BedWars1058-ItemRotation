@@ -9,6 +9,7 @@ import com.hakan.core.HCore;
 import com.hakan.core.ui.inventory.InventoryGui;
 import me.defender.itemrotation.api.RotationItem;
 import me.defender.itemrotation.API;
+import me.defender.itemrotation.api.utils.gsound.GSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -101,12 +102,14 @@ public class ItemRotationMenu extends InventoryGui {
                 // add item to player's inventory ._.
                 e.getWhoClicked().getInventory().addItem(HCore.itemBuilder(item1.getItem()).name(true, ChatColor.RED + name).build());
                // send message to the player .-.
+                ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), GSound.ENTITY_VILLAGER_YES.parseSound(), 1.0f, 1.0f);
                 e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
                         Language.getMsg((Player)e.getWhoClicked(), "shop-new-purchase")
                                 .replace("{prefix}", Language.getMsg((Player)e.getWhoClicked(), "prefix"))
                                 .replace("{item}", "&a" + name)));
             }else{
                 // send not enough resources message .-.
+                ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), GSound.ENTITY_VILLAGER_NO.parseSound(), 1.0f, 1.0f);
                 e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
                         Language.getMsg((Player)e.getWhoClicked(), "shop-insuff-money")
                                 .replace("{prefix}", Language.getMsg((Player)e.getWhoClicked(), "prefix"))

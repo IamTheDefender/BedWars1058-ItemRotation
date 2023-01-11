@@ -1,5 +1,6 @@
 package me.defender.itemrotation.api.utils;
 
+import me.defender.itemrotation.api.utils.gsound.GSound;
 import me.defender.itemrotation.items.SugarkenRotationItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -69,6 +70,7 @@ public class FlyingStar {
                 ((Player) entity).damage(this.damage, this.player);
                 this.star.remove();
                 isAlive = false;
+                player.playSound(player.getLocation(), GSound.ENTITY_ARROW_HIT_PLAYER.parseSound(), 1.0f, 1.0f);
                 return;
             }
         }

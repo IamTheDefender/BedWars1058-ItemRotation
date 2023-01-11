@@ -1,10 +1,7 @@
 package me.defender.itemrotation.api.utils;
 
 import com.andrei1058.bedwars.api.language.Language;
-import me.defender.itemrotation.items.BridgeZapperRotationItem;
-import me.defender.itemrotation.items.IceBridgeRotationItem;
-import me.defender.itemrotation.items.SugarkenRotationItem;
-import me.defender.itemrotation.items.SuperCookieRotationItem;
+import me.defender.itemrotation.items.*;
 import org.bukkit.Material;
 
 import java.util.Arrays;
@@ -27,6 +24,7 @@ public class StartupUtils {
         new SuperCookieRotationItem().register();
         new IceBridgeRotationItem().register();
         new BridgeZapperRotationItem().register();
+        new FestivityMineRotationItem().register();
     }
 
     public static void addValuesToConfig(){
