@@ -51,7 +51,7 @@ public class onShopOpen implements Listener {
             if (e.getCurrentItem().getItemMeta() != null && e.getCurrentItem().getItemMeta().getDisplayName() != null) {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals(itemName)) {
                     InventoryGui menu = new ItemRotationMenu(player);
-                    menu.open(player);
+                    menu.open((Player) e.getWhoClicked());
                 }
             }
         });
