@@ -25,7 +25,9 @@ public class StartupUtils {
         new IceBridgeRotationItem().register();
         new BridgeZapperRotationItem().register();
         new FestivityMineRotationItem().register();
+        new UnicornRotationItem().register();
     }
+   
 
     public static void addValuesToConfig(){
         ConfigUtils config = new ConfigUtils();
