@@ -1,5 +1,6 @@
 package me.defender.itemrotation;
 
+import com.andrei1058.bedwars.api.language.Language;
 import com.hakan.core.HCore;
 import me.defender.itemrotation.api.utils.StartupUtils;
 import me.defender.itemrotation.command.MainCommand;
@@ -41,6 +42,7 @@ public class ItemRotation extends JavaPlugin{
             // Register commands and add config values
             HCore.registerCommands(new MainCommand());
             StartupUtils.addValuesToConfig();
+            Language.saveIfNotExists("actionbar-itemrotation", "&aYou have %s% seconds left!");
 
             getLogger().info("ItemRotation plugin loaded successfully.");
         } catch (Exception e) {

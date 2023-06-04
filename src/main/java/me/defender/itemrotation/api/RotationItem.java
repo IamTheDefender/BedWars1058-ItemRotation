@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * This class provides basic functionality for storing and manipulating the
  * properties of a rotation item, such as its name, lore, price, and currency.
- * Subclasses should override the {@link #execute(Player)} method to implement
+ * Subclasses should override the {@link #execute(Player, Block)} method to implement
  * specific behavior for when the item is used.
  */
 public abstract class RotationItem {
@@ -75,5 +75,21 @@ public abstract class RotationItem {
         Language.saveIfNotExists("item-rotation.items." + defaultName() + ".name", "&a" + Objects.requireNonNull(defaultName()));
         Language.saveIfNotExists("item-rotation.items." + defaultName() + ".lore", Objects.requireNonNull(defaultLore()));
         Language.saveIfNotExists("item-rotation.items." + defaultName() + ".currency", Objects.requireNonNull(getCurrency().toString()));
+    }
+
+    public int getPriceConfig(Player player){
+        return Language.getPlayerLanguage(player).getInt("item-rotation.items." + defaultName() + ".price");
+    }
+
+    public Material getCurrencyConfig(Player player){
+        return Material.valueOf(Language.getMsg(player, "item-rotation.items." + defaultName() + ".currency"));
+    }
+
+    public List<String> getLore(Player player){
+        return Language.getList(player, "item-rotation.items." + defaultName() + ".lore");
+    }
+
+    public String getDisplayName(Player player){
+        return Language.getMsg(player, "item-rotation.items." + defaultName() + ".name");
     }
 }

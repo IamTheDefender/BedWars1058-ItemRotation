@@ -11,7 +11,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class UnicornRotationItem extends RotationItem {
     @Override
     public ItemStack getItem() {
-        return XMaterial.HORSE_SPAWN_EGG.parseItem();
+        return XMaterial.WHEAT.parseItem();
     }
 
     @Override
@@ -46,9 +49,17 @@ public class UnicornRotationItem extends RotationItem {
     @Override
     public boolean execute(Player player, Block block) {
         Horse horse = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
-        FlyingHorse flyingHorse = new FlyingHorse(player, horse, 0.6, 0.2, 1.0);
+        horse.setPassenger(player);
+        horse.setAdult();
+        horse.setColor(Horse.Color.WHITE);
+        horse.setStyle(Horse.Style.WHITE);
+        horse.setTamed(true);
+        horse.setOwner(player);
+        FlyingHorse flyingHorse = new FlyingHorse(player, horse, 0.6, 0.4, 1.0);
         flyingHorse.runTaskTimer(API.getMain(), 0L, 1L);
         HCore.syncScheduler().after(10, TimeUnit.SECONDS).run(horse::remove);
         return true;
     }
+
+
 }

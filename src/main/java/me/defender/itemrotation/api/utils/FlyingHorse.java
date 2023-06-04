@@ -1,5 +1,8 @@
 package me.defender.itemrotation.api.utils;
 
+import com.andrei1058.bedwars.api.language.Language;
+import com.hakan.core.HCore;
+import com.hakan.core.utils.ColorUtil;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,6 +15,7 @@ public class FlyingHorse extends BukkitRunnable {
     private final double speed;
     private final double verticalSpeed;
     private final double horizontalSpeed;
+    int time;
 
     public FlyingHorse(Player player, Horse horse, double speed, double verticalSpeed, double horizontalSpeed) {
         this.player = player;
@@ -19,40 +23,46 @@ public class FlyingHorse extends BukkitRunnable {
         this.speed = speed;
         this.verticalSpeed = verticalSpeed;
         this.horizontalSpeed = horizontalSpeed;
+        time = 0;
     }
 
     @Override
     public void run() {
         if (player.getVehicle() == null || !player.getVehicle().equals(horse)) {
-            // Stop the horse if the player is not riding it
-            horse.setVelocity(new Vector(0, 0, 0));
-            cancel();
-            horse.remove();
+            if(horse.isDead()){
+                horse.setVelocity(new Vector(0, 0, 0));
+                cancel();
+                horse.remove();
+                player.setFlying(false);
+            }else{
+                horse.setPassenger(player);
+            }
+
             return;
         }
-
+        time++;
+        time = 10 - time;
         Vector direction = player.getLocation().getDirection();
         Vector velocity = direction.clone().multiply(horizontalSpeed);
-        velocity.setY(verticalSpeed);
+        double pitch = player.getLocation().getPitch();
+        if (pitch < -45) {
+            // If player is looking down, decrease vertical speed
+            velocity.setY(velocity.getY() - 1);
+        }
+        HCore.sendActionBar(player, Language.getMsg(player, ColorUtil.colored("actionbar-itemrotation")).replace("%s%", time + ""));
 
         horse.setVelocity(velocity);
         horse.setFallDistance(0);
 
-        double pitch = player.getLocation().getPitch();
-        if (pitch > 90) pitch = 90;
-        else if (pitch < -90) pitch = -90;
-        horse.getLocation().setPitch((float) -pitch);
+        pitch = Math.min(90, Math.max(-90, -pitch));
+        horse.getLocation().setPitch((float) pitch);
 
         double yaw = player.getLocation().getYaw();
         horse.getLocation().setYaw((float) yaw);
 
         double speedModifier = Math.min(speed, velocity.length()) / velocity.length();
         horse.setJumpStrength((float) (0.4 * speedModifier));
-
-        // Update horse position to make it look smooth
-        horse.teleport(horse.getLocation().add(velocity.clone().multiply(1.0 / 20.0)));
-
-        // Update rider position to keep them centered on the horse
-        player.teleport(horse.getLocation().add(0, horse.getHeight() + 0.75, 0));
+        // Update horse position to make it look smoother
+        horse.teleport(horse.getLocation().add(velocity.clone().multiply(1.0 / 20.0)).setDirection(horse.getLocation().clone().toVector().subtract(player.getLocation().toVector())));
     }
 }

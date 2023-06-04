@@ -27,7 +27,6 @@ public class StartupUtils {
         new FestivityMineRotationItem().register();
         new UnicornRotationItem().register();
     }
-   
 
     public static void addValuesToConfig(){
         ConfigUtils config = new ConfigUtils();

@@ -74,16 +74,16 @@ public class API {
      * @param material the material representing a currency
      * @return a human-readable string representation of the currency
      */
-    public static String convertCurrencyToString(Material material){
+    public static String convertCurrencyToString(Player player, Material material){
         switch (material){
             case IRON_INGOT:
-                return "Iron";
+                return Language.getMsg(player, "meaning-iron-singular");
             case GOLD_INGOT:
-                return "Gold";
+                return Language.getMsg(player, "meaning-gold-singular");
             case DIAMOND:
-                return  "Diamond";
+                return  Language.getMsg(player, "meaning-diamond-singular");
             case EMERALD:
-                return "Emerald";
+                return Language.getMsg(player, "meaning-emerald-singular");
             default:
                 return material.name();
         }
@@ -101,7 +101,7 @@ public class API {
         if(getBedwarsAPI().getShopUtil().calculateMoney(player, currency) >= price){
             return Language.getMsg(player, "shop-lore-status-can-buy");
         }
-        return Language.getMsg(player, "shop-lore-status-cant-afford").replace("{currency}", convertCurrencyToString(currency));
+        return Language.getMsg(player, "shop-lore-status-cant-afford").replace("{currency}", convertCurrencyToString(player, currency));
     }
 
     /**
@@ -151,5 +151,10 @@ public class API {
             }
         }
         return blocks;
+    }
+
+
+    public static void debug(Object ob){
+        getMain().getLogger().info("Debug: " + ob.toString());
     }
 }

@@ -77,10 +77,10 @@ public class ItemRotationMenu extends InventoryGui {
         // !                      !
         // !                       !
         RotationItem item1 = API.items.get(API.getMain().getConfig().getInt("item-index"));
-        String name = item1.defaultName();
-        List<String> lores = item1.defaultLore();
-        int price = item1.getPrice();
-        Material currency = item1.getCurrency();
+        String name = item1.getDisplayName(player);
+        List<String> lores = item1.getLore(player);
+        int price = item1.getPriceConfig(player);
+        Material currency = item1.getCurrencyConfig(player);
 
         Collections.replaceAll(lores, "%BuyStatus%", API.getStatus(player, price, currency));
         Collections.replaceAll(lores, "%price%", String.valueOf(price));
@@ -114,7 +114,7 @@ public class ItemRotationMenu extends InventoryGui {
                         Language.getMsg((Player)e.getWhoClicked(), "shop-insuff-money")
                                 .replace("{prefix}", Language.getMsg((Player)e.getWhoClicked(), "prefix"))
                                 .replace("{amount}", String.valueOf(price - API.getBedwarsAPI().getShopUtil().calculateMoney((Player)e.getWhoClicked(), currency)))
-                                .replace("{currency}", API.convertCurrencyToString(currency))));
+                                .replace("{currency}", API.convertCurrencyToString(player, currency))));
             }
         });
 
