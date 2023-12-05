@@ -28,6 +28,12 @@ public class FlyingHorse extends BukkitRunnable {
 
     @Override
     public void run() {
+        if(time > 10){
+            horse.remove();
+            player.setFlying(false);
+            horse.setVelocity(new Vector(0, 0, 0));
+            cancel();
+        }
         if (player.getVehicle() == null || !player.getVehicle().equals(horse)) {
             if(horse.isDead()){
                 horse.setVelocity(new Vector(0, 0, 0));

@@ -82,12 +82,13 @@ public class IceBridgeRotationItem extends RotationItem {
             z += direction.getZ();
         }
 
-        HCore.syncScheduler().after(20, TimeUnit.SECONDS).run(() -> {
+        HCore.syncScheduler().after(30, TimeUnit.SECONDS).run(() -> {
            for(Block block : blocks){
                block.setType(Material.AIR);
            }
         });
 
+        /**
          HCore.syncScheduler().every(1L).run((runnable) -> {
             // Check if the player is standing on an ice block
             Block block = world.getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ());
@@ -108,6 +109,7 @@ public class IceBridgeRotationItem extends RotationItem {
                runnable.cancel();
             }
         });
+         **/
 
 
         return true;
