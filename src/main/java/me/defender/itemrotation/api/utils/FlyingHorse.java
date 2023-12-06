@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class FlyingHorse extends BukkitRunnable {
 
     private final Player player;
@@ -16,6 +19,7 @@ public class FlyingHorse extends BukkitRunnable {
     private final double verticalSpeed;
     private final double horizontalSpeed;
     int time;
+    AtomicInteger sideTime;
 
     public FlyingHorse(Player player, Horse horse, double speed, double verticalSpeed, double horizontalSpeed) {
         this.player = player;
@@ -24,16 +28,13 @@ public class FlyingHorse extends BukkitRunnable {
         this.verticalSpeed = verticalSpeed;
         this.horizontalSpeed = horizontalSpeed;
         time = 0;
+
+        sideTime = new AtomicInteger();
+        HCore.syncScheduler().every(1, TimeUnit.SECONDS).freezeIf(r -> sideTime.get() > 10).run(sideTime::getAndIncrement);
     }
 
     @Override
     public void run() {
-        if(time > 10){
-            horse.remove();
-            player.setFlying(false);
-            horse.setVelocity(new Vector(0, 0, 0));
-            cancel();
-        }
         if (player.getVehicle() == null || !player.getVehicle().equals(horse)) {
             if(horse.isDead()){
                 horse.setVelocity(new Vector(0, 0, 0));
@@ -47,7 +48,6 @@ public class FlyingHorse extends BukkitRunnable {
             return;
         }
         time++;
-        time = 10 - time;
         Vector direction = player.getLocation().getDirection();
         Vector velocity = direction.clone().multiply(horizontalSpeed);
         double pitch = player.getLocation().getPitch();
@@ -55,8 +55,7 @@ public class FlyingHorse extends BukkitRunnable {
             // If player is looking down, decrease vertical speed
             velocity.setY(velocity.getY() - 1);
         }
-        HCore.sendActionBar(player, Language.getMsg(player, ColorUtil.colored("actionbar-itemrotation")).replace("%s%", time + ""));
-
+        HCore.sendActionBar(player, Language.getMsg(player, ColorUtil.colored("actionbar-itemrotation")).replace("%s%", 10 - sideTime.get() + ""));
         horse.setVelocity(velocity);
         horse.setFallDistance(0);
 
