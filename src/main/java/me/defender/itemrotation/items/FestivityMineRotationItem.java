@@ -44,38 +44,39 @@ public class FestivityMineRotationItem extends RotationItem {
 
     @Override
     public boolean execute(Player player, Block block) {
-        spawnGrayCarpetAndBlowUpOnEnemy(player);
+        spawnGrayCarpetAndBlowUpOnEnemy(player, block.getRelative(BlockFace.UP));
         return true;
     }
-    public void spawnGrayCarpetAndBlowUpOnEnemy(Player player) {
-        // Get the player's foot block
-        Block footBlock = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
-        footBlock = footBlock.getLocation().add(0,1,0).getBlock();
+    public void spawnGrayCarpetAndBlowUpOnEnemy(Player player, Block block) {
 
         // Set the block to a gray carpet
-        footBlock.setType(XMaterial.GRAY_CARPET.parseMaterial());
+        block.setType(XMaterial.GRAY_CARPET.parseMaterial());
 
         // Create a new task to check for players walking on the carpet
-        Block finalFootBlock = footBlock;
-        HCore.syncScheduler().every(1).run(() -> {
+        HCore.syncScheduler().every(1).run((runnable) -> {
             // Get all players standing on the carpet
-            List<Player> playersOnCarpet = finalFootBlock.getWorld().getPlayers().stream()
-                    .filter(p -> p.getLocation().getBlock().equals(finalFootBlock))
+            List<Player> playersOnCarpet = block.getWorld().getPlayers().stream()
+                    .filter(p -> p.getLocation().getBlock().equals(block))
                     .collect(Collectors.toList());
 
             // If there are any players on the carpet, blow them up
             if (!playersOnCarpet.isEmpty()) {
                 boolean blast = false;
                 for (Player p : playersOnCarpet) {
-                    // Check if the player is on a different team
-                    if(!API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).getTeam(player).getMembers().contains(p)) {
+                    // Check if the player is on a different team & is not respawning & is not a spectator
+                    if(!API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).getTeam(player).getMembers().contains(p) &&
+                    !API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).isReSpawning(player) &&
+                    !API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).isSpectator(player)) {
                         blast = true;
                     }
                 }
                 if(blast){
-                    TNTPrimed tnt = (TNTPrimed) finalFootBlock.getWorld().spawnEntity(finalFootBlock.getLocation(), EntityType.PRIMED_TNT);
-                    tnt.setFuseTicks(0); // Make the TNT explode immediately
-                    finalFootBlock.setType(Material.AIR);
+                    for (int i = 0; i < 10; i++) {
+                        TNTPrimed tnt = (TNTPrimed) block.getWorld().spawnEntity(block.getLocation(), EntityType.PRIMED_TNT);
+                        tnt.setFuseTicks(0); // Make the TNT explode immediately
+                        block.setType(Material.AIR);
+                    }
+                    runnable.cancel();
                 }
             }
         });

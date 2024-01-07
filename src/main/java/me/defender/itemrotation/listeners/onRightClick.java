@@ -23,6 +23,7 @@ public class onRightClick implements Listener {
 
         if(item == null || item.getType() == Material.AIR) return;
         if(item.getItemMeta() == null || item.getItemMeta().getDisplayName() == null) return;
+        if(event.getClickedBlock() == null) return;
         // if the items are same
         if(item.getType().equals(rotationItem.getItem().getType()) && item.getItemMeta().getDisplayName().contains(rotationItem.getDisplayName(player))){
             // If "execute" method returns true, it means that it executed without errors and should proceed
