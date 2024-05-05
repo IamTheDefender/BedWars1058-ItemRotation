@@ -69,7 +69,7 @@ public class IceBridgeRotationItem extends RotationItem {
                     Block block = world.getBlockAt(location);
                     if (!block.getType().isSolid()) {
                         XSound.BLOCK_GLASS_BREAK.play(location, 1.0f, 0.5f);
-                        world.playEffect(location.clone().add(0, 0.5, 0), Effect.HAPPY_VILLAGER, 0, 1);
+                        world.playEffect(location.clone().add(0, 1.3, 0), Effect.HAPPY_VILLAGER, 0);
                         block.setType(Material.ICE);
                         blocks.add(block);
                     }
@@ -77,11 +77,11 @@ public class IceBridgeRotationItem extends RotationItem {
                         if (blocks.contains(block)) {
                             World w = block.getWorld();
                             XSound.ENTITY_CHICKEN_EGG.play(block.getLocation(), 1.0f, 0.5f);
-                            w.playEffect(block.getLocation().clone().add(0, 0.5, 0), Effect.CLOUD, 0, 1);
+                            w.playEffect(block.getLocation().clone().add(0, 1.3, 0), Effect.CLOUD, 0);
                             block.setType(Material.AIR);
                             blocks.remove(block);
                         }
-                    }, 6 * 15L);
+                    }, 30 * 20L);
                 }
             }, i * 2L);
             x += direction.getX();
