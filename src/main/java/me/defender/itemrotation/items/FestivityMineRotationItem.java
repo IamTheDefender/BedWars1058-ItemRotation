@@ -47,6 +47,7 @@ public class FestivityMineRotationItem extends RotationItem {
         spawnGrayCarpetAndBlowUpOnEnemy(player, block.getRelative(BlockFace.UP));
         return true;
     }
+
     public void spawnGrayCarpetAndBlowUpOnEnemy(Player player, Block block) {
 
         // Set the block to a gray carpet
@@ -64,13 +65,13 @@ public class FestivityMineRotationItem extends RotationItem {
                 boolean blast = false;
                 for (Player p : playersOnCarpet) {
                     // Check if the player is on a different team & is not respawning & is not a spectator
-                    if(!API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).getTeam(player).getMembers().contains(p) &&
+                    if (!API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).getTeam(player).getMembers().contains(p) &&
                     !API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).isReSpawning(player) &&
                     !API.getBedwarsAPI().getArenaUtil().getArenaByPlayer(player).isSpectator(player)) {
                         blast = true;
                     }
                 }
-                if(blast){
+                if (blast) {
                     for (int i = 0; i < 10; i++) {
                         TNTPrimed tnt = (TNTPrimed) block.getWorld().spawnEntity(block.getLocation(), EntityType.PRIMED_TNT);
                         tnt.setFuseTicks(0); // Make the TNT explode immediately
@@ -82,4 +83,8 @@ public class FestivityMineRotationItem extends RotationItem {
         });
     }
 
+    @Override
+    public boolean isBlockRequired() {
+        return true;
+    }
 }

@@ -56,4 +56,9 @@ public class SuperCookieRotationItem extends RotationItem {
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 300, 4));
         return true;
     }
+
+    @Override
+    public boolean isBlockRequired() {
+        return false;
+    }
 }

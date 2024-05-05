@@ -67,6 +67,13 @@ public abstract class RotationItem {
     public abstract boolean execute(Player player, Block block);
 
     /**
+     * Returns whether the rotation item requires a block to be clicked.
+     *
+     * @return true if a block is required, false otherwise
+     */
+    public abstract boolean isBlockRequired();
+
+    /**
      * Registers the rotation item with the item rotation API.
      */
     public void register(){

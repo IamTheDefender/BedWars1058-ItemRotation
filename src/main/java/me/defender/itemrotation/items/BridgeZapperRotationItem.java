@@ -81,6 +81,11 @@ public class BridgeZapperRotationItem extends RotationItem {
         return true;
     }
 
+    @Override
+    public boolean isBlockRequired() {
+        return true;
+    }
+
     /**
      * Returns true if the given block is wool, false otherwise.
      *
