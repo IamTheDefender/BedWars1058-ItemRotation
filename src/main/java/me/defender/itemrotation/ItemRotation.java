@@ -4,12 +4,10 @@ import com.andrei1058.bedwars.api.language.Language;
 import com.hakan.core.HCore;
 import me.defender.itemrotation.api.utils.StartupUtils;
 import me.defender.itemrotation.command.MainCommand;
-import me.defender.itemrotation.listeners.onRightClick;
-import me.defender.itemrotation.listeners.onShopOpen;
+import me.defender.itemrotation.listeners.InteractListener;
+import me.defender.itemrotation.listeners.ShopListener;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -26,8 +24,8 @@ public class ItemRotation extends JavaPlugin{
         try {
             // Register event listeners and initialize variables
             HCore.initialize(this);
-            HCore.registerListeners(new onShopOpen());
-            HCore.registerListeners(new onRightClick());
+            HCore.registerListeners(new ShopListener());
+            HCore.registerListeners(new InteractListener());
             API.items = new ArrayList<>();
 
             // Save default config and language file values
@@ -63,6 +61,10 @@ public class ItemRotation extends JavaPlugin{
         API.items = null;
 
         getLogger().info("ItemRotation plugin shut down successfully.");
+    }
+
+    public static ItemRotation getInstance() {
+        return ItemRotation.getPlugin(ItemRotation.class);
     }
 
 }

@@ -61,5 +61,9 @@ public class UnicornRotationItem extends RotationItem {
         return true;
     }
 
+    @Override
+    public boolean isBlockRequired() {
+        return false;
+    }
 
 }
